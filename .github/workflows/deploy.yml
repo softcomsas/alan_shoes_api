@@ -1,0 +1,29 @@
+name: CI/CD Alan Shoes API
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install sshpass
+        run: sudo apt-get install -y sshpass
+
+      - name: Deploy to VPS
+        run: |
+          cat > /tmp/deploy_alan_shoes.sh << EOF
+          #!/bin/bash
+            echo "🚀 Deploying Alan Shoes API..."
+            cd /var/www/html/alan_shoes_api
+            git pull origin main
+            npm install
+            npm run build
+            pm2 restart alan-shoes-api
+            pm2 save
+            echo "✅ Deployed successfully!"
+          EOF
+          sshpass -p ${{secrets.VPS_SSH_PASS}} ssh -o StrictHostKeyChecking=no -p ${{secrets.VPS_SSH_PORT}} ${{secrets.VPS_SSH_USER}}@${{secrets.VPS_HOST}} 'bash -s' < /tmp/deploy_alan_shoes.sh

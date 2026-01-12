@@ -1,0 +1,191 @@
+{
+  "info": {
+    "name": "Alan Shoes - Chat API",
+    "description": "Colección Postman para endpoints de chat (usuarios ⇄ admins). Variables: baseUrl, tokenUser, tokenAdmin, conversationId, adminId, messageId",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000/alanShoes/api" },
+    { "key": "token", "value": "" },
+    { "key": "tokenUser", "value": "" },
+    { "key": "tokenAdmin", "value": "" },
+    { "key": "conversationId", "value": "" },
+    { "key": "adminId", "value": "" },
+    { "key": "messageId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Auth - Register User",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\",\n  \"nombre\": \"Usuario Prueba\",\n  \"role\": \"user\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/auth/register",
+          "host": ["{{baseUrl}}"],
+          "path": ["auth","register"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Auth - Login User",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\"\n}"
+        },
+        "url": { "raw": "{{baseUrl}}/auth/login", "host": ["{{baseUrl}}"], "path": ["auth","login"] }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const res = pm.response.json();",
+              "if(res && res.token){",
+              "  pm.collectionVariables.set('tokenUser', res.token);",
+              "  console.log('tokenUser saved');",
+              "} else {",
+              "  console.warn('No token found in response');",
+              "}"
+            ]
+          }
+        }
+      ],
+      "response": []
+    },
+    {
+      "name": "Auth - Login Admin",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"adminpass\"\n}" },
+        "url": { "raw": "{{baseUrl}}/auth/login", "host": ["{{baseUrl}}"], "path": ["auth","login"] }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const res = pm.response.json();",
+              "if(res && res.token){",
+              "  pm.collectionVariables.set('tokenAdmin', res.token);",
+              "  console.log('tokenAdmin saved');",
+              "} else {",
+              "  console.warn('No token found in response');",
+              "}"
+            ]
+          }
+        }
+      ],
+      "response": []
+    },
+    {
+      "name": "Create Conversation (User)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{tokenUser}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"subject\": \"Duda con pedido #123\",\n  \"message\": \"No he recibido mi paquete\"\n}"
+        },
+        "url": { "raw": "{{baseUrl}}/chat/conversations", "host": ["{{baseUrl}}"], "path": ["chat","conversations"] }
+      },
+      "response": []
+    },
+    {
+      "name": "Send Message (User/Admin)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": { "mode": "raw", "raw": "{\n  \"message\": \"Respuesta o nuevo mensaje\"\n}" },
+        "url": { "raw": "{{baseUrl}}/chat/conversations/{{conversationId}}/messages", "host": ["{{baseUrl}}"], "path": ["chat","conversations","{{conversationId}}","messages"] }
+      },
+      "response": []
+    },
+    {
+      "name": "List Conversations",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": { "raw": "{{baseUrl}}/chat/conversations", "host": ["{{baseUrl}}"], "path": ["chat","conversations"] }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Conversation Details",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": { "raw": "{{baseUrl}}/chat/conversations/{{conversationId}}", "host": ["{{baseUrl}}"], "path": ["chat","conversations","{{conversationId}}"] }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Messages (paginated)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": {
+          "raw": "{{baseUrl}}/chat/conversations/{{conversationId}}/messages?page=1&limit=50",
+          "host": ["{{baseUrl}}"],
+          "path": ["chat","conversations","{{conversationId}}","messages"],
+          "query": [ { "key": "page", "value": "1" }, { "key": "limit", "value": "50" } ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Assign Admin (Admin only)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{tokenAdmin}}" }
+        ],
+        "body": { "mode": "raw", "raw": "{\n  \"adminId\": {{adminId}}\n}" },
+        "url": { "raw": "{{baseUrl}}/chat/conversations/{{conversationId}}/assign", "host": ["{{baseUrl}}"], "path": ["chat","conversations","{{conversationId}}","assign"] }
+      },
+      "response": []
+    },
+    {
+      "name": "Close Conversation",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": { "raw": "{{baseUrl}}/chat/conversations/{{conversationId}}/close", "host": ["{{baseUrl}}"], "path": ["chat","conversations","{{conversationId}}","close"] }
+      },
+      "response": []
+    },
+    {
+      "name": "Mark Messages Read",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": { "mode": "raw", "raw": "{\n  \"messageIds\": [{{messageId}}]\n}" },
+        "url": { "raw": "{{baseUrl}}/chat/conversations/{{conversationId}}/mark-read", "host": ["{{baseUrl}}"], "path": ["chat","conversations","{{conversationId}}","mark-read"] }
+      },
+      "response": []
+    }
+  ]
+}

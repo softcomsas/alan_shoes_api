@@ -1,0 +1,127 @@
+{
+  "configVersion": 1,
+  "timestamp": 1767956417376,
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/index.html",
+        "/main-RUCQ77NO.js",
+        "/polyfills-B6TNHZQ6.js",
+        "/styles-IRV2JRNT.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/assets/carrucel-moda/0bbc4e72513f0682f3006e9eda240bc8.jpg",
+        "/assets/carrucel-moda/67458142b93ac81070007743306568f2.jpg",
+        "/assets/carrucel-moda/Imagen de WhatsApp 2025-10-16 a las 13.28.30_112184f3.jpg",
+        "/assets/carrucel-moda/d29a1f24af26f0d3c90df8482cb023e8.jpg",
+        "/assets/carrucel-moda/f2318d0e92ff25477176ed57cdda083c.jpg",
+        "/assets/carrucel-movil/05d49d627ddcbc9cd960559173613be0.jpg",
+        "/assets/carrucel-movil/2f441cddd03d35c0b9fa92c201df7a44.jpg",
+        "/assets/carrucel-movil/Copilot_20251022_185848.png",
+        "/assets/carrucel-movil/Copilot_20251022_185928.png",
+        "/assets/carrucel/05d49d627ddcbc9cd960559173613be0.jpg",
+        "/assets/carrucel/2f441cddd03d35c0b9fa92c201df7a44.jpg",
+        "/assets/carrucel/3003611f40ee084c5d1399c042c98fd3 (1).jpg",
+        "/assets/carrucel/3d55dd9eaa61ed5988275cd0fbd7a23d (1).jpg",
+        "/assets/carrucel/Generated Image October 01, 2025 - 6_04AM.png",
+        "/assets/categoria/6e2e113af4afc143333b7d3bfe5a9d8c.jpg",
+        "/assets/categoria/a91e26e0607c176d173b4365c4137a9e.jpg",
+        "/assets/categoria/d53f503b2560e4b8dfd1f2e3936992c0.jpg",
+        "/assets/categoria/un-carrito-de-la-compra-repleto-surtidores-variados-incluyendo-pan-y-verduras-frescas-productos-que-incluyen-bebidas-embotelladas-384844181.webp",
+        "/assets/icons/Copilot_20251207_180016.png",
+        "/assets/icons/Copilot_20251207_180551.png",
+        "/assets/icons/icon-128x128.png",
+        "/assets/icons/icon-192x192.png",
+        "/assets/icons/icon-256x256.png",
+        "/assets/icons/icon-384x384.png",
+        "/assets/icons/icon-48x48.png",
+        "/assets/icons/icon-512x512.png",
+        "/assets/icons/icon-72x72.png",
+        "/assets/icons/icon-96x96.png",
+        "/assets/img/1000494403-removebg-preview.png",
+        "/assets/img/D_NQ_902464-MLA87499544133_072025-OO.webp",
+        "/assets/img/Imagen de WhatsApp 2025-09-25 a las 17.44.08_2b42c9df.jpg",
+        "/assets/img/blank-profile-picture.webp",
+        "/media/bootstrap-icons-CVBWLLHT.woff2",
+        "/media/bootstrap-icons-VQNJTM6Q.woff"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/assets/carrucel-moda/0bbc4e72513f0682f3006e9eda240bc8.jpg": "9d7dbb0d5b0916228636793002cd32d58bbe830d",
+    "/assets/carrucel-moda/67458142b93ac81070007743306568f2.jpg": "ddedc2949e81939c6effe03fcf29ab4f50888d36",
+    "/assets/carrucel-moda/Imagen de WhatsApp 2025-10-16 a las 13.28.30_112184f3.jpg": "460132b64bbfcff71a2f4f1d32618b03317910fe",
+    "/assets/carrucel-moda/d29a1f24af26f0d3c90df8482cb023e8.jpg": "d47130a080ddfc280dbf01ac07833b5df77d8e52",
+    "/assets/carrucel-moda/f2318d0e92ff25477176ed57cdda083c.jpg": "fdf3f1a44b4207569deac9d1393421866a07c48c",
+    "/assets/carrucel-movil/05d49d627ddcbc9cd960559173613be0.jpg": "5c0e7478fad4176c5c9360a5eca1c288475fe025",
+    "/assets/carrucel-movil/2f441cddd03d35c0b9fa92c201df7a44.jpg": "b108016feee241e384f85ecb3f74471e3cd773bc",
+    "/assets/carrucel-movil/Copilot_20251022_185848.png": "c3d18416488489fdc54b6741b3f50771288b50bc",
+    "/assets/carrucel-movil/Copilot_20251022_185928.png": "6bb468ac521acd9d141e408876d5fbf99a395442",
+    "/assets/carrucel/05d49d627ddcbc9cd960559173613be0.jpg": "16bd68a3159398d5828dbf7b7d24520521f02eb0",
+    "/assets/carrucel/2f441cddd03d35c0b9fa92c201df7a44.jpg": "79614a60a35092c06fd102fca674885b84fd6104",
+    "/assets/carrucel/3003611f40ee084c5d1399c042c98fd3 (1).jpg": "e2c617a3d4319540c39ab7c134b00a6b5e3022f9",
+    "/assets/carrucel/3d55dd9eaa61ed5988275cd0fbd7a23d (1).jpg": "7fc2015b01322ea7549cf7dd086571e2472f19ec",
+    "/assets/carrucel/Generated Image October 01, 2025 - 6_04AM.png": "910664cdf53c86c8ce8b0f5233254adf34eb0690",
+    "/assets/categoria/6e2e113af4afc143333b7d3bfe5a9d8c.jpg": "28cf2f0a84f88be2ac8801a23de85c099af8f390",
+    "/assets/categoria/a91e26e0607c176d173b4365c4137a9e.jpg": "66347a062e5b31a70fd68d3a780daa93b306a2e9",
+    "/assets/categoria/d53f503b2560e4b8dfd1f2e3936992c0.jpg": "8cfec6d1cc7105181e70d8624700c9266decceaf",
+    "/assets/categoria/un-carrito-de-la-compra-repleto-surtidores-variados-incluyendo-pan-y-verduras-frescas-productos-que-incluyen-bebidas-embotelladas-384844181.webp": "0889b3897e619c479ec59c1052041d57b85c1ca7",
+    "/assets/icons/Copilot_20251207_180016.png": "52f906b330f055e3e0a876e0aa709b801079f481",
+    "/assets/icons/Copilot_20251207_180551.png": "e04a1bf461a41d3c3ff000d30ed2653a61dfa097",
+    "/assets/icons/icon-128x128.png": "626e82719b67381d3effd56dcfc4b4d158de68ed",
+    "/assets/icons/icon-192x192.png": "fc944dc13b9ab1de4699085717527cebc14d3dbb",
+    "/assets/icons/icon-256x256.png": "8ad7fa755e3e0e6417987029bd57df85c1e5d38f",
+    "/assets/icons/icon-384x384.png": "26774b01804d2790bc19b02e204999572e5b4225",
+    "/assets/icons/icon-48x48.png": "093986b64b4ca287680d41dc2805d722f2969d9d",
+    "/assets/icons/icon-512x512.png": "8d6d76aab07a85728cffca0a88fd282760c819ea",
+    "/assets/icons/icon-72x72.png": "4b0bbac059268783c002444c64e6d9c3df6a97f6",
+    "/assets/icons/icon-96x96.png": "42e263b5f9c5fed514d85c61a796019e65aefa90",
+    "/assets/img/1000494403-removebg-preview.png": "7528a3e1ee7276cd62402d572cdc39d955fd377e",
+    "/assets/img/D_NQ_902464-MLA87499544133_072025-OO.webp": "dfbc71c0ca23350b44740c1d07a42c4ccf6b0ca8",
+    "/assets/img/Imagen de WhatsApp 2025-09-25 a las 17.44.08_2b42c9df.jpg": "198768ae1219eb384d2a1651c767c8a22741ad3b",
+    "/assets/img/blank-profile-picture.webp": "6a748b96d9c2b0c73cf7952cdf77bbedae1f0c8f",
+    "/index.html": "6c2b98fda2780aafcf323f6a77de065d58403686",
+    "/main-RUCQ77NO.js": "aaa4e7af54bcad461f3894dbe0fcc92f5f7b4f9a",
+    "/media/bootstrap-icons-CVBWLLHT.woff2": "b441fcff939e24fa0906a37b7788788b9fddbb68",
+    "/media/bootstrap-icons-VQNJTM6Q.woff": "762010c79b4a05e1131fc8fb3b1aeff324d8033f",
+    "/polyfills-B6TNHZQ6.js": "bf76ac291d7f51c1139b7edcf86b359a30c08c64",
+    "/styles-IRV2JRNT.css": "d7929e22ae9d4f38bba1f1ce365ef0c94fe47697"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}
