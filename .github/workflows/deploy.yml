@@ -42,8 +42,11 @@ jobs:
             # Pull latest changes
             git pull origin main
 
-            # Install dependencies
-            npm ci --only=production
+            # Remove node_modules and package-lock to ensure clean install
+            rm -rf node_modules package-lock.json
+
+            # Install all dependencies (production needs some dev dependencies for build)
+            npm install --production=false
 
             # Build the application
             npm run build
