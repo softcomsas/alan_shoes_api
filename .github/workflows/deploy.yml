@@ -1,29 +1,56 @@
-name: CI/CD Alan Shoes API
+name: Deploy Alan Shoes API
 
 on:
   push:
-    branches: ["main"]
-  pull_request:
-    branches: ["main"]
+    branches:
+      - main
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Install sshpass
-        run: sudo apt-get install -y sshpass
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22.16.0'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build the application
+        run: npm run build
 
       - name: Deploy to VPS
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_SSH_USER: ${{ secrets.VPS_SSH_USER }}
+          VPS_SSH_PASS: ${{ secrets.VPS_SSH_PASS }}
+          VPS_SSH_PORT: ${{ secrets.VPS_SSH_PORT }}
         run: |
-          cat > /tmp/deploy_alan_shoes.sh << EOF
-          #!/bin/bash
-            echo "🚀 Deploying Alan Shoes API..."
+          # Install sshpass for password authentication
+          sudo apt-get update && sudo apt-get install -y sshpass
+
+          # Deploy to server
+          sshpass -p $VPS_SSH_PASS ssh -p $VPS_SSH_PORT -o StrictHostKeyChecking=no $VPS_SSH_USER@$VPS_HOST << 'EOF'
+            echo "🚀 Starting deployment..."
             cd /var/www/html/alan_shoes_api
+
+            # Pull latest changes
             git pull origin main
-            npm install
+
+            # Install dependencies
+            npm ci --only=production
+
+            # Build the application
             npm run build
-            pm2 restart alan-shoes-api
+
+            # Restart the application with PM2
+            pm2 restart alan_shoes_api || pm2 start ecosystem.config.js
             pm2 save
-            echo "✅ Deployed successfully!"
+
+            echo "✅ Deployment completed successfully!"
           EOF
-          sshpass -p ${{secrets.VPS_SSH_PASS}} ssh -o StrictHostKeyChecking=no -p ${{secrets.VPS_SSH_PORT}} ${{secrets.VPS_SSH_USER}}@${{secrets.VPS_HOST}} 'bash -s' < /tmp/deploy_alan_shoes.sh
