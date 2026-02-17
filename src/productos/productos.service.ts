@@ -21,7 +21,9 @@ export class ProductosService {
   }
 
   async findAll(): Promise<Producto[]> {
-    return await this.productoRepository.find();
+    return await this.productoRepository.find({
+      take: 30,
+    });
   }
 
   async findOne(id: number): Promise<Producto | null> {
