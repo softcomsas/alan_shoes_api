@@ -30,7 +30,9 @@ let ProductosService = class ProductosService {
         return await this.productoRepository.save(producto);
     }
     async findAll() {
-        return await this.productoRepository.find();
+        return await this.productoRepository.find({
+            take: 30,
+        });
     }
     async findOne(id) {
         return await this.productoRepository.findOneBy({ id });
