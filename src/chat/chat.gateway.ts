@@ -60,14 +60,37 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   @SubscribeMessage('sendMessage')
   async handleSendMessage(@MessageBody() payload: { conversationId: number; content: string }, @ConnectedSocket() client: Socket) {
-    const userId = client.data.userId as number;
-    const role = client.data.role as 'user' | 'admin';
-    const saved = await this.chatService.sendMessage(payload.conversationId, userId, role, payload.content);
+    try {
+      const userId = client.data.userId as number | undefined;
+      const role = client.data.role as 'user' | 'admin';
 
-    this.server.to(`conversation:${payload.conversationId}`).emit('message', saved);
+      if (!userId) {
+        client.emit('error', { message: 'User ID is required' });
+        return;
+      }
 
-    if (role === 'user') {
-      this.server.to('admins').emit('newConversationMessage', { conversationId: payload.conversationId, message: saved });
+      if (!payload.conversationId || !payload.content) {
+        client.emit('error', { message: 'Conversation ID and content are required' });
+        return;
+      }
+
+      const saved = await this.chatService.sendMessage(
+        payload.conversationId,
+        userId,
+        role,
+        payload.content,
+      );
+
+      this.server.to(`conversation:${payload.conversationId}`).emit('message', saved);
+
+      if (role === 'user') {
+        this.server.to('admins').emit('newConversationMessage', {
+          conversationId: payload.conversationId,
+          message: saved,
+        });
+      }
+    } catch (err) {
+      client.emit('error', { message: err instanceof Error ? err.message : 'Failed to send message' });
     }
   }
 }
