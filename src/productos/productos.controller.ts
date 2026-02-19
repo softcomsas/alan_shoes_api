@@ -43,6 +43,12 @@ export class ProductosController {
     return await this.productosService.findAll();
   }
 
+  // últimos 30 productos
+  @Get('recientes')
+  async findLast30(): Promise<Producto[]> {
+    return this.productosService.findLast30();
+  }
+
   @Get(':id')
   async findOne(@Param('id') id: string) {
     return await this.productosService.findOne(Number(id));
@@ -194,5 +200,11 @@ export class ProductosController {
   @Get('categoria/alimentos-bebidas')
   async findAllAlimentosYBebidas(): Promise<Producto[]> {
     return this.productosService.findAllAlimentosYBebidas();
+  }
+
+  // Cumples (artículos de cumpleaños)
+  @Get('categoria/cumples')
+  async findAllCumples(): Promise<Producto[]> {
+    return this.productosService.findAllCumples();
   }
 }

@@ -21,7 +21,15 @@ export class ProductosService {
   }
 
   async findAll(): Promise<Producto[]> {
+    return await this.productoRepository.find();
+  }
+
+  // -------------------------------
+  // 🔥 NUEVA FUNCIÓN: últimos 30 productos añadidos
+  // -------------------------------
+  async findLast30(): Promise<Producto[]> {
     return await this.productoRepository.find({
+      order: { id: 'DESC' },
       take: 30,
     });
   }
@@ -240,5 +248,14 @@ export class ProductosService {
       where: { categoria: 'alimentosYBebidas' },
     });
   }  
+
+  // -------------------------------
+  // 🔥 NUEVA FUNCIÓN PARA Cumples (artículos de cumpleaños)
+  // -------------------------------
+  async findAllCumples(): Promise<Producto[]> {
+    return await this.productoRepository.find({
+      where: { categoria: 'cumples' },
+    });
+  }
 
 }
