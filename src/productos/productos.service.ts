@@ -29,7 +29,6 @@ export class ProductosService {
   // -------------------------------
   async findLast30(): Promise<Producto[]> {
     return await this.productoRepository.find({
-      order: { id: 'DESC' },
       take: 30,
     });
   }
