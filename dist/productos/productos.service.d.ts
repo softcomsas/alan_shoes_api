@@ -7,6 +7,7 @@ export declare class ProductosService {
     constructor(productoRepository: Repository<Producto>);
     create(createProductoDto: CreateProductoDto, img?: Buffer): Promise<Producto>;
     findAll(): Promise<Producto[]>;
+    findLast30(): Promise<Producto[]>;
     findOne(id: number): Promise<Producto | null>;
     update(id: number, updateProductoDto: UpdateProductoDto): Promise<Producto | null>;
     remove(id: number): Promise<{
@@ -35,4 +36,5 @@ export declare class ProductosService {
     findAllTrasporte(): Promise<Producto[]>;
     findAllAseo(): Promise<Producto[]>;
     findAllAlimentosYBebidas(): Promise<Producto[]>;
+    findAllCumples(): Promise<Producto[]>;
 }

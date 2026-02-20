@@ -8,6 +8,7 @@ export declare class ProductosController {
     create(createProductoDto: CreateProductoDto, file?: Express.Multer.File): Promise<Producto>;
     uploadImage(id: string, file: Express.Multer.File): Promise<Producto>;
     findAll(): Promise<Producto[]>;
+    findLast30(): Promise<Producto[]>;
     findOne(id: string): Promise<Producto | null>;
     update(id: string, updateProductoDto: UpdateProductoDto): Promise<Producto | null>;
     remove(id: string): Promise<{
@@ -35,4 +36,5 @@ export declare class ProductosController {
     findAllTrasporte(): Promise<Producto[]>;
     findAllAseo(): Promise<Producto[]>;
     findAllAlimentosYBebidas(): Promise<Producto[]>;
+    findAllCumples(): Promise<Producto[]>;
 }

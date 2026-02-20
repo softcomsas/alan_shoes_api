@@ -26,32 +26,18 @@ let ChatController = class ChatController {
     constructor(chatService) {
         this.chatService = chatService;
     }
-    async createConversation(req, body) {
-        const userId = req.user?.sub ?? req.user?.id ?? req.user?.userId;
-        return this.chatService.createConversation(userId, body.subject, body.message);
+    async adminDelete(id, req) {
+        const adminId = req.user?.sub ?? req.user?.id ?? req.user?.userId;
+        return this.chatService.adminDeleteConversation(Number(id), adminId);
     }
-    async userDelete(req, id) {
-        const userId = req.user?.sub ?? req.user?.id ?? req.user?.userId;
-        const role = req.user?.role;
-        if (role === roles_1.Role.Admin) {
-            return { message: 'Admins must use admin delete endpoint' };
+    async assignAdmin(id, body) {
+        if (!body.adminId) {
+            throw new common_1.BadRequestException('Admin ID is required');
         }
-        return this.chatService.userDeleteConversation(Number(id), userId);
-    }
-    async sendMessage(req, id, body) {
-        const userId = req.user?.sub ?? req.user?.id ?? req.user?.userId;
-        const role = req.user?.role;
-        return this.chatService.sendMessage(Number(id), userId, role, body.message);
-    }
-    async listConversations(req) {
-        const userId = req.user?.sub ?? req.user?.id ?? req.user?.userId;
-        const role = req.user?.role;
-        if (role === roles_1.Role.Admin)
-            return this.chatService.findAllConversations();
-        return this.chatService.findUserConversations(userId);
+        return this.chatService.assignAdmin(Number(id), body.adminId);
     }
     async getMessages(req, id) {
-        const userId = req.user?.sub ?? req.user?.id ?? req.user?.userId;
+        const userId = req.user?.sub ?? req.user?.id ?? req.user?.userId ?? 1;
         const role = req.user?.role;
         const conv = await this.chatService.findOneConversation(Number(id));
         if (!conv)
@@ -61,65 +47,53 @@ let ChatController = class ChatController {
         }
         return [];
     }
-    async assignAdmin(id, body) {
-        return this.chatService.assignAdmin(Number(id), body.adminId);
+    async sendMessage(req, id, body) {
+        if (!body.message || body.message.trim() === '') {
+            throw new common_1.BadRequestException('Message is required and cannot be empty');
+        }
+        const userId = req.user?.sub ?? req.user?.id ?? req.user?.userId ?? 1;
+        const role = (req.user?.role ?? 'user');
+        return this.chatService.sendMessage(Number(id), userId, role, body.message);
     }
-    async adminDelete(id, req) {
-        const adminId = req.user?.sub ?? req.user?.id ?? req.user?.userId;
-        return this.chatService.adminDeleteConversation(Number(id), adminId);
+    async getConversation(req, id) {
+        const userId = req.user?.sub ?? req.user?.id ?? req.user?.userId ?? 1;
+        const role = req.user?.role;
+        const conv = await this.chatService.findOneConversation(Number(id));
+        if (!conv) {
+            throw new common_1.BadRequestException('Conversation not found');
+        }
+        if (role === roles_1.Role.Admin || conv.userId === userId) {
+            return conv;
+        }
+        throw new common_1.BadRequestException('Unauthorized to access this conversation');
+    }
+    async userDelete(req, id) {
+        const userId = req.user?.sub ?? req.user?.id ?? req.user?.userId;
+        if (!userId) {
+            throw new common_1.BadRequestException('User ID is required');
+        }
+        const role = req.user?.role;
+        if (role === roles_1.Role.Admin) {
+            throw new common_1.BadRequestException('Admins must use admin delete endpoint');
+        }
+        return this.chatService.userDeleteConversation(Number(id), userId);
+    }
+    async listConversations(req) {
+        const userId = req.user?.sub ?? req.user?.id ?? req.user?.userId ?? 1;
+        const role = req.user?.role;
+        if (role === roles_1.Role.Admin)
+            return this.chatService.findAllConversations();
+        return this.chatService.findUserConversations(userId);
+    }
+    async createConversation(req, body) {
+        if (!body.message || body.message.trim() === '') {
+            throw new common_1.BadRequestException('Message is required and cannot be empty');
+        }
+        const userId = req.user?.sub ?? req.user?.id ?? req.user?.userId ?? 1;
+        return this.chatService.createConversation(userId, body.subject, body.message);
     }
 };
 exports.ChatController = ChatController;
-__decorate([
-    (0, common_1.Post)('conversations'),
-    __param(0, (0, common_1.Request)()),
-    __param(1, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, create_chat_dto_1.CreateConversationDto]),
-    __metadata("design:returntype", Promise)
-], ChatController.prototype, "createConversation", null);
-__decorate([
-    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
-    (0, common_1.Delete)('conversations/:id'),
-    __param(0, (0, common_1.Request)()),
-    __param(1, (0, common_1.Param)('id')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, String]),
-    __metadata("design:returntype", Promise)
-], ChatController.prototype, "userDelete", null);
-__decorate([
-    (0, common_1.Post)('conversations/:id/messages'),
-    __param(0, (0, common_1.Request)()),
-    __param(1, (0, common_1.Param)('id')),
-    __param(2, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, String, send_message_dto_1.SendMessageDto]),
-    __metadata("design:returntype", Promise)
-], ChatController.prototype, "sendMessage", null);
-__decorate([
-    (0, common_1.Get)('conversations'),
-    __param(0, (0, common_1.Request)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Promise)
-], ChatController.prototype, "listConversations", null);
-__decorate([
-    (0, common_1.Get)('conversations/:id/messages'),
-    __param(0, (0, common_1.Request)()),
-    __param(1, (0, common_1.Param)('id')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, String]),
-    __metadata("design:returntype", Promise)
-], ChatController.prototype, "getMessages", null);
-__decorate([
-    (0, roles_decorator_1.Roles)(roles_1.Role.Admin),
-    (0, common_1.Put)('conversations/:id/assign'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
-    __metadata("design:returntype", Promise)
-], ChatController.prototype, "assignAdmin", null);
 __decorate([
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard, role_guard_1.RolesGuard),
     (0, roles_decorator_1.Roles)(roles_1.Role.Admin),
@@ -130,6 +104,65 @@ __decorate([
     __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", Promise)
 ], ChatController.prototype, "adminDelete", null);
+__decorate([
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard, role_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)(roles_1.Role.Admin),
+    (0, common_1.Put)('conversations/:id/assign'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", Promise)
+], ChatController.prototype, "assignAdmin", null);
+__decorate([
+    (0, common_1.Get)('conversations/:id/messages'),
+    __param(0, (0, common_1.Request)()),
+    __param(1, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", Promise)
+], ChatController.prototype, "getMessages", null);
+__decorate([
+    (0, common_1.Post)('conversations/:id/messages'),
+    __param(0, (0, common_1.Request)()),
+    __param(1, (0, common_1.Param)('id')),
+    __param(2, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String, send_message_dto_1.SendMessageDto]),
+    __metadata("design:returntype", Promise)
+], ChatController.prototype, "sendMessage", null);
+__decorate([
+    (0, common_1.Get)('conversations/:id'),
+    __param(0, (0, common_1.Request)()),
+    __param(1, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", Promise)
+], ChatController.prototype, "getConversation", null);
+__decorate([
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    (0, common_1.Delete)('conversations/:id'),
+    __param(0, (0, common_1.Request)()),
+    __param(1, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", Promise)
+], ChatController.prototype, "userDelete", null);
+__decorate([
+    (0, common_1.Get)('conversations'),
+    __param(0, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], ChatController.prototype, "listConversations", null);
+__decorate([
+    (0, common_1.Post)('conversations'),
+    __param(0, (0, common_1.Request)()),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, create_chat_dto_1.CreateConversationDto]),
+    __metadata("design:returntype", Promise)
+], ChatController.prototype, "createConversation", null);
 exports.ChatController = ChatController = __decorate([
     (0, common_1.Controller)('chat'),
     __metadata("design:paramtypes", [chat_service_1.ChatService])

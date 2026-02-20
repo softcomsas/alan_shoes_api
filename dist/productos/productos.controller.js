@@ -32,6 +32,9 @@ let ProductosController = class ProductosController {
     async findAll() {
         return await this.productosService.findAll();
     }
+    async findLast30() {
+        return this.productosService.findLast30();
+    }
     async findOne(id) {
         return await this.productosService.findOne(Number(id));
     }
@@ -107,6 +110,9 @@ let ProductosController = class ProductosController {
     async findAllAlimentosYBebidas() {
         return this.productosService.findAllAlimentosYBebidas();
     }
+    async findAllCumples() {
+        return this.productosService.findAllCumples();
+    }
 };
 exports.ProductosController = ProductosController;
 __decorate([
@@ -133,6 +139,12 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], ProductosController.prototype, "findAll", null);
+__decorate([
+    (0, common_1.Get)('recientes'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ProductosController.prototype, "findLast30", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
@@ -289,6 +301,12 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], ProductosController.prototype, "findAllAlimentosYBebidas", null);
+__decorate([
+    (0, common_1.Get)('categoria/cumples'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ProductosController.prototype, "findAllCumples", null);
 exports.ProductosController = ProductosController = __decorate([
     (0, common_1.Controller)('productos'),
     __metadata("design:paramtypes", [productos_service_1.ProductosService])

@@ -30,6 +30,9 @@ let ProductosService = class ProductosService {
         return await this.productoRepository.save(producto);
     }
     async findAll() {
+        return await this.productoRepository.find();
+    }
+    async findLast30() {
         return await this.productoRepository.find({
             take: 30,
         });
@@ -160,6 +163,11 @@ let ProductosService = class ProductosService {
     async findAllAlimentosYBebidas() {
         return await this.productoRepository.find({
             where: { categoria: 'alimentosYBebidas' },
+        });
+    }
+    async findAllCumples() {
+        return await this.productoRepository.find({
+            where: { categoria: 'cumples' },
         });
     }
 };

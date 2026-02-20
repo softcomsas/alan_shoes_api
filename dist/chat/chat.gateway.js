@@ -67,12 +67,28 @@ let ChatGateway = class ChatGateway {
         client.leave(`conversation:${id}`);
     }
     async handleSendMessage(payload, client) {
-        const userId = client.data.userId;
-        const role = client.data.role;
-        const saved = await this.chatService.sendMessage(payload.conversationId, userId, role, payload.content);
-        this.server.to(`conversation:${payload.conversationId}`).emit('message', saved);
-        if (role === 'user') {
-            this.server.to('admins').emit('newConversationMessage', { conversationId: payload.conversationId, message: saved });
+        try {
+            const userId = client.data.userId;
+            const role = client.data.role;
+            if (!userId) {
+                client.emit('error', { message: 'User ID is required' });
+                return;
+            }
+            if (!payload.conversationId || !payload.content) {
+                client.emit('error', { message: 'Conversation ID and content are required' });
+                return;
+            }
+            const saved = await this.chatService.sendMessage(payload.conversationId, userId, role, payload.content);
+            this.server.to(`conversation:${payload.conversationId}`).emit('message', saved);
+            if (role === 'user') {
+                this.server.to('admins').emit('newConversationMessage', {
+                    conversationId: payload.conversationId,
+                    message: saved,
+                });
+            }
+        }
+        catch (err) {
+            client.emit('error', { message: err instanceof Error ? err.message : 'Failed to send message' });
         }
     }
 };

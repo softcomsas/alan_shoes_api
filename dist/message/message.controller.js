@@ -22,20 +22,20 @@ let MessageController = class MessageController {
     constructor(messageService) {
         this.messageService = messageService;
     }
-    create(createMessageDto) {
-        return this.messageService.create(createMessageDto);
+    async create(createMessageDto) {
+        return await this.messageService.create(createMessageDto);
     }
-    findAll() {
-        return this.messageService.findAll();
+    async findAll() {
+        return await this.messageService.findAll();
     }
-    findOne(id) {
-        return this.messageService.findOne(+id);
+    async findOne(id) {
+        return await this.messageService.findOne(+id);
     }
-    update(id, updateMessageDto) {
-        return this.messageService.update(+id, updateMessageDto);
+    async update(id, updateMessageDto) {
+        return await this.messageService.update(+id, updateMessageDto);
     }
-    remove(id) {
-        return this.messageService.remove(+id);
+    async remove(id) {
+        return await this.messageService.remove(+id);
     }
 };
 exports.MessageController = MessageController;
@@ -44,20 +44,20 @@ __decorate([
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_message_dto_1.CreateMessageDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], MessageController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], MessageController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], MessageController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Patch)(':id'),
@@ -65,14 +65,14 @@ __decorate([
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, update_message_dto_1.UpdateMessageDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], MessageController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], MessageController.prototype, "remove", null);
 exports.MessageController = MessageController = __decorate([
     (0, common_1.Controller)('message'),
