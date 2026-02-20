@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1771501092678,
+  "timestamp": 1771599085939,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -12,7 +12,7 @@
       },
       "urls": [
         "/index.html",
-        "/main-ECSNHHDD.js",
+        "/main-ZVN7PHL2.js",
         "/polyfills-B6TNHZQ6.js",
         "/styles-IRV2JRNT.css"
       ],
@@ -98,8 +98,8 @@
     "/assets/img/D_NQ_902464-MLA87499544133_072025-OO.webp": "dfbc71c0ca23350b44740c1d07a42c4ccf6b0ca8",
     "/assets/img/Imagen de WhatsApp 2025-09-25 a las 17.44.08_2b42c9df.jpg": "198768ae1219eb384d2a1651c767c8a22741ad3b",
     "/assets/img/blank-profile-picture.webp": "6a748b96d9c2b0c73cf7952cdf77bbedae1f0c8f",
-    "/index.html": "571d08fcc44ed078262e587fc595a1a463858852",
-    "/main-ECSNHHDD.js": "e3dc9fb8ac2c5cb31ab3c4f90f84b27d1df83fea",
+    "/index.html": "a5532d975497d8d684e92630b98fea89dacaa9e7",
+    "/main-ZVN7PHL2.js": "5d01bda54a8caae022f5d2682086bd1f260b8046",
     "/media/bootstrap-icons-CVBWLLHT.woff2": "b441fcff939e24fa0906a37b7788788b9fddbb68",
     "/media/bootstrap-icons-VQNJTM6Q.woff": "762010c79b4a05e1131fc8fb3b1aeff324d8033f",
     "/polyfills-B6TNHZQ6.js": "bf76ac291d7f51c1139b7edcf86b359a30c08c64",
